@@ -1,0 +1,50 @@
+/*****
+Leet code
+61. Rotate List
+
+Given the head of a linked list, rotate the list to the right by k places.
+
+Input: head = [1,2,3,4,5], k = 2
+Output: [4,5,1,2,3]
+
+***//
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @param {number} k
+ * @return {ListNode}
+ */
+var rotateRight = function(head, k) {
+    if(head === null || k === 0) return head;
+    let node = head, 
+        resultList = new ListNode(0), 
+        resultNode = resultList, count = 0;
+    resultNode.next = head;
+    while(node) {
+         count++;
+         node = node.next
+    }
+    let i = k%count;
+    while(i > 0) {
+        resultNode.next = rotateList(resultList.next);
+        i--
+    }
+    return resultList.next
+};
+
+function rotateList (list) {
+    let node = list, resultList = new ListNode(0), resultNode = resultList;
+    while(node.next) {
+        resultNode.next = new ListNode(node.val);
+        resultNode = resultNode.next;
+        node = node.next;
+    }
+    node.next = resultList.next;
+    return node;
+}
